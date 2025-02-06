@@ -2,7 +2,18 @@ const posts = require('../data/posts');
 
 function index(req, res) {
     // copiamo la logica dell'index
-    res.json(posts);
+
+    // Bonus
+    //Inizialmente, l'array d'oggetti filtrato corrisponde a quello originale
+    let filteredPost = posts;
+
+    // Se la richiesta contiene un filtro, allora filtriamo l'array
+    if (req.query.tags) {
+        filteredPost = posts.filter(post => post.tags.includes(req.query.tags));
+    }
+    // restituiamo la variabile filteredMenu
+    // potrebbe essere stata filtrata o contenere l'array originale
+    res.json(filteredPost);
 }
 
 function show(req, res) {
