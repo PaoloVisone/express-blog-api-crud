@@ -16,6 +16,9 @@ function show(req, res) {
 
     // Faccio il controllo
     if (!post) {
+        //Imposto lo status 404
+        res.status(404)
+
         return res.json({
             error: "Not Found",
             message: "Post non trovato"
