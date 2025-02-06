@@ -14,6 +14,14 @@ function show(req, res) {
     // cerco il post tramite id
     const post = posts.find(post => post.id === id);
 
+    // Faccio il controllo
+    if (!post) {
+        return res.json({
+            error: "Not Found",
+            message: "Post non trovato"
+        })
+    }
+
     // Restituisci JSON
     res.json(post);
 }
