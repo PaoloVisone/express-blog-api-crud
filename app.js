@@ -10,6 +10,9 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
+// Registro il body-parser
+app.use(express.json());
+
 // Rotta
 app.use("/posts", postRouter)
 
