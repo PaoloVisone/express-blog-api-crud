@@ -42,6 +42,7 @@ function show(req, res) {
 
 function store(req, res) {
     // copiamo la logica della store
+    console.log(req.body);
     res.send('Creazione nuovo post');
 }
 
