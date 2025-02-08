@@ -94,7 +94,44 @@ function update(req, res) {
 }
 
 function modify(req, res) {
-    res.send('Modifica parziale della pizza ' + req.params.id);
+    // res.send('Modifica parziale della pizza ' + req.params.id);
+
+    // recuperiamo l'id dall' URL e trasformiamolo in numero
+    const id = parseInt(req.params.id);
+
+    // cerco il post tramite id
+    const post = posts.find(post => post.id === id);
+
+    // Facciamo il controllo
+    if (!post) {
+
+        // ritorno lo stato di errore 404, non trovato
+        res.status(404);
+
+        // ritorno un messaggio di errore (formato json)
+        return res.json({
+            error: "Not Found",
+            message: "Post non trovata"
+        })
+    }
+
+    //  modifichiamo i dati del post trovato
+    // if (req.body.name) {
+    //     post.name = req.body.name;
+    // } else {
+    //     post.name = post.name;
+    // }
+    // versione operatore ternario
+    req.body.name ? post.name = req.body.name : post.name = post.name;
+    req.body.image ? post.image = req.body.image : post.image = post.image;
+    req.body.tags ? post.tags = req.body.tags : post.tags = post.tags;
+
+    // stampiamo in console i posts
+    console.log(posts);
+
+
+    // ritorniamo l'oggetto modificato
+    res.json(post);
 };
 
 function destroy(req, res) {
