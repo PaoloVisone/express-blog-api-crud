@@ -42,14 +42,60 @@ function show(req, res) {
 
 function store(req, res) {
     // copiamo la logica della store
-    console.log(req.body);
-    res.send('Creazione nuovo post');
+    // console.log(req.body);
+    // res.send('Creazione nuovo post');
+
+    // Creiamo un nuovo id incrementando l'ultimo id presente
+    const newId = posts[posts.length - 1].id + 1;
+
+    // Creiamo un nuovo post
+    const newPost = {
+        id: newId,
+        name: req.body.name,
+        image: req.body.image,
+        ingredients: req.body.tags
+    }
+
+    // Aggiungiamo il post
+    posts.push(newPost);
+
+    // controlliamo
+    console.log(posts);
+
+    // Restituiamo lo status corretto e la pizza appena creata
+    res.status(201);
+    res.json(newPost);
 }
 
 function update(req, res) {
     // copiamo la logica dell'update
-    res.send('Modifica integrale del post ' + req.params.id);
+    // res.send('Modifica integrale del post ' + req.params.id);
+
+    // recuperiamo l'id dall' URL e trasformiamolo in numero
+    const id = parseInt(req.params.id)
+    // cerco il post tramite id
+    const post = posts.find(post => post.id === id);
+    // Piccolo controllo
+    if (!post) {
+        res.status(404);
+        return res.json({
+            error: "Not Found",
+            message: "Post non trovata"
+        })
+    }
+    // Aggiorniamo la pizza
+    post.name = req.body.name;
+    post.image = req.body.image;
+    post.tags = req.body.tags;
+
+    console.log(posts)
+    // Restituiamo il post appena aggiornata
+    res.json(post);
 }
+
+function modify(req, res) {
+    res.send('Modifica parziale della pizza ' + req.params.id);
+};
 
 function destroy(req, res) {
     // copiamo la logica della destroy..
@@ -81,4 +127,4 @@ function destroy(req, res) {
 }
 
 // esportiamo tutto
-module.exports = { index, show, store, update, destroy }
+module.exports = { index, show, store, update, modify, destroy }
