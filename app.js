@@ -1,9 +1,12 @@
-const express = require('express')
-const app = express()
-const port = 3000
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// importiamo il middleware di CORS
+var cors = require('cors');
 
 // middlewares errorsHandler
-const errorsHandler = require("./middlewares/errorsHandler");
+const errorsHandler = require("./middlewares/errorHandler");
 
 // middlewares notFound
 const notFound = require("./middlewares/notFound");
@@ -18,6 +21,9 @@ app.get('/', (req, res) => {
 
 // Registro il body-parser
 app.use(express.json());
+
+// registro il middleware di CORS
+app.use(cors({ origin: 'http://localhost:5174' }))
 
 // Rotta
 app.use("/posts", postRouter)
