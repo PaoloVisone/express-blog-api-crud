@@ -51,9 +51,10 @@ function store(req, res) {
     // Creiamo un nuovo post
     const newPost = {
         id: newId,
-        name: req.body.name,
+        title: req.body.title,
+        content: req.body.content,
         image: req.body.image,
-        ingredients: req.body.tags
+        tags: req.body.tags,
     }
 
     // Aggiungiamo il post
